@@ -215,11 +215,11 @@ namespace LevelConstructor
             if (Type == CellType.Unavailable)// && cell.GameObject.IsMoved == false)
             {
                 return;
-                GameObject = GameObject;// new GameObject(cell.GameObject.Type, cell.GameObject.Angle, Lines);
-                this.GameObject.Lines = Lines;
-                cell.GameObject = null;
-                if (cell.Selected)
-                    cell.OnCellClick(this, new MouseButtonEventArgs(Mouse.PrimaryDevice, 1, MouseButton.Left));
+                //GameObject = GameObject;// new GameObject(cell.GameObject.Type, cell.GameObject.Angle, Lines);
+                //this.GameObject.Lines = Lines;
+                //cell.GameObject = null;
+                //if (cell.Selected)
+                //    cell.OnCellClick(this, new MouseButtonEventArgs(Mouse.PrimaryDevice, 1, MouseButton.Left));
             }
             else if (Type == CellType.Default)
             {

@@ -1,0 +1,9 @@
+﻿<Application x:Class="LevelConstructor.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:viewModels="clr-namespace:LevelConstructor.ViewModels"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <viewModels:MainViewModel x:Key="MainWindowViewModel"></viewModels:MainViewModel>
+    </Application.Resources>
+</Application>

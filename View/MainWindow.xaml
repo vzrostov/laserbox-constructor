@@ -1,0 +1,278 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:viewModels="clr-namespace:LevelConstructor.ViewModels"
+        xmlns:levelConstructor="clr-namespace:LevelConstructor"
+        xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        x:Class="LevelConstructor.MainWindow"
+        Title="{Binding AppTitleName}" Height="652" Width="800" Loaded="OnMainWindowLoaded" 
+        >
+
+    <Window.Resources>
+
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></BooleanToVisibilityConverter>
+
+        <viewModels:InverseBooleanConverter x:Key="BoolInverse"></viewModels:InverseBooleanConverter>
+
+        <DataTemplate x:Key="ObjectItemTemplate" DataType="viewModels:ObjectItem">
+            <Button x:Name="btn"  Width="80" Height="80" Margin="5" IsEnabled="{Binding Enabled}" Command="{Binding Command}" CommandParameter="{Binding}">
+                <Grid Opacity="{TemplateBinding Opacity}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Image Source="{Binding Image}" IsEnabled="{TemplateBinding IsEnabled}"/>
+                    <TextBlock FontSize="10" Grid.Row="1" Text="{Binding Name}" TextAlignment="Center" TextWrapping="Wrap" IsEnabled="{TemplateBinding IsEnabled}"/>
+                </Grid>
+            </Button>
+            <DataTemplate.Triggers>
+                <Trigger SourceName="btn" Property="IsEnabled" Value="True">
+                    <Setter Property="Opacity" Value="1"/>
+                </Trigger>
+                <Trigger SourceName="btn" Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.4"/>
+                </Trigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+
+        <Style x:Key="ContextMenuItemStyle" TargetType="MenuItem">
+            <Setter Property="Header" Value="{Binding Name}"/>
+            <Setter Property="Command" Value="{Binding Command}" />
+            <Setter Property="CommandParameter" Value="{Binding}"/>
+            <Setter Property="Icon" Value="{Binding Icon}"/>
+            <Setter Property="IsEnabled" Value="{Binding Enabled}"/>
+        </Style>
+
+        <ContextMenu x:Key="CellContextMenu" ItemsSource="{Binding Properties.ContextMenuItems}" ItemContainerStyle="{StaticResource ContextMenuItemStyle}">
+        </ContextMenu>
+
+        <Style x:Key="DropdownButtonStyle" TargetType="{x:Type levelConstructor:DropdownButton}">
+            <Setter Property="FocusVisualStyle">
+                <Setter.Value>
+                    <Style>
+                        <Setter Property="Control.Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <Rectangle Margin="0" SnapsToDevicePixels="True" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="#FFDDDDDD"/>
+            <Setter Property="BorderBrush" Value="#FF707070"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type levelConstructor:DropdownButton}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <Grid Width="Auto">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                  Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" 
+                                                  Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  Margin="2 0 2 0" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                <Polygon Grid.Column="1" Points="0,0 10,0, 5,8" Stroke="Black" Fill="Black" VerticalAlignment="Center" Margin="3"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="True">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FFBEE6FD"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FF3C7FB1"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FFC4E5F6"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FF2C628B"/>
+                            </Trigger>
+                            <Trigger Property="ToggleButton.IsChecked" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FFBCDDEE"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FF245A83"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" TargetName="border" Value="#FFF4F4F4"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FFADB2B5"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="#FF838383"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+    </Window.Resources>
+
+    <Window.DataContext>
+        <StaticResource ResourceKey="MainWindowViewModel"/>
+    </Window.DataContext>
+
+    <Window.InputBindings>
+        <KeyBinding Key="A" Modifiers="Control" Command="{Binding Properties.SelectAllCommand}"/>
+    </Window.InputBindings>
+
+    <Grid Background="LightGray">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!-- Top panel -->
+        <StackPanel Orientation="Horizontal">
+            <TextBox Width="20" Margin="5" Height="20" MaxLength="2" Text="{Binding Columns, Mode=TwoWay}"></TextBox>
+            <TextBlock VerticalAlignment="Center">x</TextBlock>
+            <TextBox Width="20" Margin="5" Height="20" MaxLength="2" Text="{Binding Rows, Mode=TwoWay}"></TextBox>
+            <Button Margin="5" Command="{Binding NewLevelCommand}" Padding="5" Content="New level"/>
+            <Button Margin="5" Command="{Binding SaveLevelCommand}" Padding="5" Content="Save"/>
+            <Button Margin="5" Command="{Binding LoadLevelCommand}" Padding="5" Content="Load"/>
+            <StackPanel Margin="5" VerticalAlignment="Center">
+                <RadioButton GroupName="xx" IsChecked="{Binding IsWinCombination, Mode=TwoWay}" Content="Win position"/>
+                <RadioButton GroupName="xx" IsChecked="{Binding IsWinCombination, Converter={StaticResource BoolInverse}, Mode=TwoWay}" Content="Start position"/>
+            </StackPanel>
+            <!--StackPanel Margin="1" VerticalAlignment="Center">
+                <Button Margin="1" Command="{Binding TurnVCommand}" Content="Развернуть по вертикали"/>
+                <Button Margin="1" Command="{Binding TurnHCommand}" Content="Развернуть по горизонтали"/>
+            </-->
+        </StackPanel>
+
+        <!-- Top panel -->
+        <ToolBar Grid.Row="1" BorderThickness="0">
+            <levelConstructor:DropdownButton Margin="3" Content="Movable Objects" Padding="0" Style="{DynamicResource DropdownButtonStyle}">
+                <levelConstructor:DropdownButton.ContextMenu>
+                    <ContextMenu ItemsSource="{Binding Properties.MovedObjects}" ItemContainerStyle="{StaticResource ContextMenuItemStyle}"></ContextMenu>
+                </levelConstructor:DropdownButton.ContextMenu>
+            </levelConstructor:DropdownButton>
+            <levelConstructor:DropdownButton Margin="3" Content="Stationary Objects" Padding="4" Style="{DynamicResource DropdownButtonStyle}">
+                <levelConstructor:DropdownButton.ContextMenu>
+                    <ContextMenu ItemsSource="{Binding Properties.StacionarObjects}" ItemContainerStyle="{StaticResource ContextMenuItemStyle}"></ContextMenu>
+                </levelConstructor:DropdownButton.ContextMenu>
+            </levelConstructor:DropdownButton>
+            <levelConstructor:DropdownButton Margin="3" Content="Receivers" Padding="4" Style="{DynamicResource DropdownButtonStyle}">
+                <levelConstructor:DropdownButton.ContextMenu>
+                    <ContextMenu ItemsSource="{Binding Properties.Receivers}" ItemContainerStyle="{StaticResource ContextMenuItemStyle}"></ContextMenu>
+                </levelConstructor:DropdownButton.ContextMenu>
+            </levelConstructor:DropdownButton>
+            <Button Margin="3" IsEnabled="{Binding IsWinCombination}" Command="{Binding RemoveMoveable}">Remove movable objects</Button>
+            <Button Margin="3" Padding="4" Command="{Binding ShakeCommand}" IsEnabled="{Binding IsStartCombination}" Content="Shake it" />
+            <Button Click="OnPrintBtnClick">Print</Button>
+        </ToolBar>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="1.25*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="20"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Viewbox Name="mainCanvas" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible">
+                <Border BorderThickness="1">
+                    <!-- border for level state. Red - winning combination -->
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsWin}" Value="true">
+                                    <Setter Property="BorderBrush" Value="Red"></Setter>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsWin}" Value="false">
+                                    <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <!-- game field canvas -->
+                    <Canvas Height="100" Width="100" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="Visible">
+                        <Image x:Name="LevelBackground" Canvas.Left="0" Canvas.Top="0" Canvas.Bottom="0" Canvas.Right="0" Width="100" Height="100" Source="{Binding LevelBackground}"/>
+                        <Canvas x:Name="Canvas" Width="60" Height="90" Canvas.Top="5" Canvas.Left="20" Canvas.Bottom="5"/>
+                    </Canvas>
+                </Border>
+            </Viewbox>
+
+            <GridSplitter Grid.Column="1" Grid.RowSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Black"/>
+
+            <!-- Right side with UI elements -->
+            <ScrollViewer HorizontalAlignment="Stretch" Grid.Column="2" Grid.RowSpan="2" VerticalScrollBarVisibility="Auto" Visibility="Visible">
+                <StackPanel DataContext="{Binding Properties}">
+                    <Expander Header="Cell type" IsExpanded="True" BorderBrush="DodgerBlue" Margin="3">
+                        <ItemsControl ItemsSource="{Binding AreaItems}" ItemTemplate="{StaticResource ObjectItemTemplate}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </Expander>
+                    
+                    <Expander Header="Controllers" IsExpanded="True" BorderBrush="DodgerBlue" Margin="3" Visibility="{Binding ControllersSetupVisibility}">
+                        <StackPanel>
+                            <CheckBox Margin="3" IsChecked="{Binding BlueControllerEnabled}" Content="Blue" ToolTip=""/>
+                            <CheckBox Margin="3" IsChecked="{Binding RedControllerEnabled}" Content="Red"/>
+                            <CheckBox Margin="3" IsChecked="{Binding GreenControllerEnabled}" Content="Green"/>
+                        </StackPanel>
+                    </Expander>
+                    
+                    <Expander Header="Turns by button" IsExpanded="True" BorderBrush="DodgerBlue" Margin="3" Visibility="{Binding ControllersSetupVisibility}">
+                        <StackPanel>
+                            <CheckBox Margin="3" IsChecked="{Binding ACWControllerEnabled}" Content="Counter-clockwise"/>
+                            <CheckBox Margin="3" IsChecked="{Binding CWControllerEnabled}" Content="Clockwise"/>
+                        </StackPanel>
+                    </Expander>
+
+                    <Expander Header="Turns" IsExpanded="True" BorderBrush="DodgerBlue" Margin="3">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" Margin="5" DataContext="{Binding RotateLeft}"
+                                    Content="{Binding Name}" Command="{Binding Command}" CommandParameter="{Binding}"/>
+                            <Button Grid.Column="1" Margin="5" DataContext="{Binding RotateRight}"
+                                    Content="{Binding Name}" Command="{Binding Command}" CommandParameter="{Binding}"/>
+                        </Grid>
+                    </Expander>
+
+                    <!--Icon list with all objects on the right side-->
+                    <Expander Header="Objects" IsExpanded="True" BorderBrush="DodgerBlue" Margin="3" Visibility="Visible">
+                        <ItemsControl ItemsSource="{Binding ObjectsItems}" ItemTemplate="{StaticResource ObjectItemTemplate}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </Expander>
+                </StackPanel>
+            </ScrollViewer>
+
+            <StackPanel  Grid.Row="1" Orientation="Horizontal">
+                <StackPanel.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontSize" Value="15"></Setter>
+                    </Style>
+                </StackPanel.Resources>
+                <TextBlock Margin="10 0 0 0" Text="Split: "></TextBlock>
+                <TextBlock Text="{Binding SplitCount}"></TextBlock>
+                <TextBlock Margin="10 0 0 0" Text="Recv: "></TextBlock>
+                <TextBlock Text="{Binding RecvCount}"></TextBlock>
+            </StackPanel>
+
+        </Grid>
+
+    </Grid>
+</Window>
