@@ -5,7 +5,7 @@
 ## Features
 
 - Only Windows
-- Fully MVVM MFC application
+- Fully MVVM WPF application
 - Intuitive mouse only control, win combination indicator
 
 ## TODOs
