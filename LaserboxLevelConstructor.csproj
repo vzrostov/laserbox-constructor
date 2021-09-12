@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9F7E735A-BE8C-439A-BE66-2FE47116F1B2}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LevelConstructor</RootNamespace>
+    <AssemblyName>LevelConstructor</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ExpressionBlendVersion>5.0.40218.0</ExpressionBlendVersion>
+    <TargetFrameworkProfile />
+    <PublishUrl>опубликовать\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\receiver_mono.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="View\App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="View\BuilderResources.cs" />
+    <Compile Include="Primitives\ControllerType.cs" />
+    <Compile Include="AppCommon.cs" />
+    <Compile Include="View\DropdownButton.cs" />
+    <Compile Include="GameField.cs" />
+    <Compile Include="LazerLogic.cs" />
+    <Compile Include="GameObject.cs" />
+    <Compile Include="LazerPort.cs" />
+    <Compile Include="Primitives\ObjectType.cs" />
+    <Compile Include="Primitives\Rotation.cs" />
+    <Compile Include="Primitives\SelectionChangedEventArgs.cs" />
+    <Compile Include="ViewModel\AreaItem.cs" />
+    <Compile Include="ViewModel\InverseBooleanConverter.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ObjectItem.cs" />
+    <Compile Include="Primitives\ObservableHashSet.cs" />
+    <Compile Include="ViewModel\PanelItem.cs" />
+    <Compile Include="ViewModel\RelayCommand.cs" />
+    <Compile Include="Primitives\FullPosition.cs" />
+    <Compile Include="ViewModel\PropertiesPanelViewModel.cs" />
+    <Compile Include="ViewModel\RotationItem.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Page Include="View\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="View\App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Cell.cs" />
+    <Compile Include="Primitives\CellType.cs" />
+    <Compile Include="View\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\blaster.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\available.png" />
+    <Resource Include="Resources\notavailable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>Клиентский профиль .NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\empty_cell.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\all.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\movable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\shadow_default.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\receiver_mono.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\receiver_none.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\receiver_tetra.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\receiver_tri.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\receiver_di.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\receiver_mono.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\none.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\angle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\triangle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\tube.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\moveable_angle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\moveable_triangle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\moveable_all.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\moveable_tube.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\stacionar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\teleport_stacionar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\teleport_moveable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\mirror.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\controller_blue.png" />
+    <Resource Include="Resources\controller_green.png" />
+    <Resource Include="Resources\controller_red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\blasterx.png" />
+    <Resource Include="Resources\movedblaster.png" />
+    <Resource Include="Resources\movedblasterx.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
